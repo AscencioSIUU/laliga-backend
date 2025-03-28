@@ -15,11 +15,12 @@ import (
 
 // Match representa la estructura de un partido.
 type Match struct {
-	ID     int    `json:"id"`
-	TeamA  string `json:"team_a"`
-	TeamB  string `json:"team_b"`
-	ScoreA int    `json:"score_a"`
-	ScoreB int    `json:"score_b"`
+	ID        int    `json:"id"`
+	HomeTeam  string `json:"homeTeam"`
+	AwayTeam  string `json:"awayTeam"`
+	MatchDate string `json:"matchDate"` // O usa time.Time si prefieres
+	ScoreA    int    `json:"score_a"`
+	ScoreB    int    `json:"score_b"`
 }
 
 var db *sql.DB
@@ -76,8 +77,24 @@ func main() {
 }
 
 func getAllMatches(c *gin.Context) {
-	// Por ahora se devuelve un slice vacío; más adelante consultarás la BD.
-	c.JSON(http.StatusOK, gin.H{"matches": []Match{}})
+	rows, err := db.Query("SELECT id, team_a, team_b, match_date, score_a, score_b FROM matches")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al obtener partidos"})
+		return
+	}
+	defer rows.Close()
+
+	var matches []Match
+	for rows.Next() {
+		var m Match
+		err := rows.Scan(&m.ID, &m.HomeTeam, &m.AwayTeam, &m.MatchDate, &m.ScoreA, &m.ScoreB)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al leer partidos"})
+			return
+		}
+		matches = append(matches, m)
+	}
+	c.JSON(http.StatusOK, gin.H{"matches": matches})
 }
 
 func getMatchByID(c *gin.Context) {
@@ -97,7 +114,19 @@ func createMatch(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// Aquí insertarías newMatch en la BD y devolverías el partido creado.
+	// Aquí insertarías newMatch en la base de datos, por ejemplo:
+	query := "INSERT INTO matches (team_a, team_b, match_date, score_a, score_b) VALUES (?, ?, ?, ?, ?)"
+	result, err := db.Exec(query, newMatch.HomeTeam, newMatch.AwayTeam, newMatch.MatchDate, 0, 0)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "No se pudo crear el partido"})
+		return
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al obtener el ID"})
+		return
+	}
+	newMatch.ID = int(id)
 	c.JSON(http.StatusCreated, gin.H{"match": newMatch})
 }
 

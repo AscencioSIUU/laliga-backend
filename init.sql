@@ -9,8 +9,9 @@ FLUSH PRIVILEGES;
 
 CREATE TABLE IF NOT EXISTS matches (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  team_a VARCHAR(100),
-  team_b VARCHAR(100),
+  team_a VARCHAR(100),  -- Aquí se almacenará el valor de HomeTeam
+  team_b VARCHAR(100),  -- Aquí se almacenará el valor de AwayTeam
+  match_date DATE,
   score_a INT,
   score_b INT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
