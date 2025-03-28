@@ -1,0 +1,28 @@
+# (Puedes eliminar la línea version: "3.8" si te sale el warning, no es estrictamente necesaria)
+services:
+  db:
+    image: mysql:8.0
+    container_name: laliga-db
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: laliga
+      MYSQL_USER: laliga
+      MYSQL_PASSWORD: laliga
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: .
+    container_name: laliga-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_USER: laliga
+      DB_PASSWORD: laliga
+      DB_NAME: laliga

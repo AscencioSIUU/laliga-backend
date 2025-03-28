@@ -1,25 +1,15 @@
-FROM golang:1.18-alpine AS builder
+# Stage 1: Compilación
+FROM golang:1.21-alpine AS builder
 WORKDIR /app
-
-# descargar dependencias
 COPY go.mod go.sum ./
 RUN go mod download
-
-# copiar codigo fuente
 COPY . .
-
-# compilar
 RUN go build -o main .
 
-# crear imagen
+# Stage 2: Imagen final
 FROM alpine:latest
 WORKDIR /app
-
-# copiar el stage anterior
 COPY --from=builder /app/main .
-
-# exponer puerto 8080
+COPY --from=builder /app/public ./public
 EXPOSE 8080
-
-# comando para ejecutar app
 CMD ["./main"]
