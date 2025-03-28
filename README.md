@@ -22,10 +22,11 @@ lab1and2/
 ├── init.sql
 ├── main.go
 └── public/
-└── LaLigaTracker.html
+    └── LaLigaTracker.html
 └── imgs/
-└── e594b348-c193-4b46-b2bb-ac4a58d751a0.jpeg
-
+    └── imgs/e594b348-c193-4b46-b2bb-ac4a58d751a0.jpeg
+    
+---
 - **Dockerfile:** Define el proceso de compilación del backend y la inclusión del frontend.
 - **docker-compose.yml:** Orquesta los servicios de MySQL (base de datos) y el backend.
 - **init.sql:** Script de inicialización que configura el usuario, plugin de autenticación y crea la tabla `matches`.
