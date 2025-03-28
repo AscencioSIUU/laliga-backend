@@ -34,6 +34,10 @@ lab1and2/
 
 ---
 
+![Screenshot de La Liga Tracker](imgs/e594b348-c193-4b46-b2bb-ac4a58d751a0.jpeg)
+
+---
+
 ## Pasos para Levantar el Proyecto
 
 ### 1. Clonar el Repositorio
