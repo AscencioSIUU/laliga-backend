@@ -13,7 +13,7 @@ Este proyecto es el backend y frontend de **La Liga Tracker**, una aplicación p
 ---
 
 ## Estructura del Proyecto
-
+```
 lab1and2/
 ├── Dockerfile
 ├── docker-compose.yml
@@ -25,13 +25,29 @@ lab1and2/
     └── LaLigaTracker.html
 └── imgs/
     └── imgs/e594b348-c193-4b46-b2bb-ac4a58d751a0.jpeg
-    
+```
+
 ---
+## Descripción
+### Archivos Principales
 - **Dockerfile:** Define el proceso de compilación del backend y la inclusión del frontend.
 - **docker-compose.yml:** Orquesta los servicios de MySQL (base de datos) y el backend.
 - **init.sql:** Script de inicialización que configura el usuario, plugin de autenticación y crea la tabla `matches`.
 - **main.go:** Código del backend (API REST) desarrollado con Gin.
 - **public/LaLigaTracker.html:** Archivo estático que representa el frontend de la aplicación.
+### Rutas creadas
+
+## Endpoints del Backend
+
+| Endpoint             | Método   | Descripción                                   | Ejemplo de Petición / Cuerpo                       |
+|----------------------|----------|-----------------------------------------------|----------------------------------------------------|
+| `/api/matches`       | **GET**  | Obtiene todos los partidos.                  | N/A                                                |
+| `/api/matches/:id`   | **GET**  | Obtiene un partido específico por su ID.     | `GET /api/matches/1`                               |
+| `/api/matches`       | **POST** | Crea un nuevo partido.                        | <pre>{"homeTeam": "Barcelona","awayTeam": "Real Madrid","matchDate":"2025-04-01"}</pre> |
+| `/api/matches/:id`   | **PUT**  | Actualiza un partido existente por su ID.     | <pre>{"homeTeam": "Atletico","awayTeam": "Sevilla","matchDate": "2025-05-10"}</pre> |
+| `/api/matches/:id`   | **DELETE** | Elimina un partido específico por su ID.   | `DELETE /api/matches/1`                            |
+
+
 
 ---
 
