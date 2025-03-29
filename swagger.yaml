@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: La Liga Tracker API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /api/matches:
+    get:
+      summary: Obtener todos los partidos
+      responses:
+        "200":
+          description: Lista de partidos
+    post:
+      summary: Crear un nuevo partido
+      responses:
+        "201":
+          description: Partido creado
+  /api/matches/{id}:
+    get:
+      summary: Obtener un partido por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Partido encontrado
+        "404":
+          description: Partido no encontrado
+    put:
+      summary: Actualizar un partido existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Partido actualizado
+    delete:
+      summary: Eliminar un partido
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Partido eliminado
+  /api/matches/{id}/goals:
+    patch:
+      summary: Registrar un gol (incrementar en 1)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Gol registrado
+  /api/matches/{id}/yellowcards:
+    patch:
+      summary: Registrar una tarjeta amarilla (incrementar en 1)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Tarjeta amarilla registrada
+  /api/matches/{id}/redcards:
+    patch:
+      summary: Registrar una tarjeta roja (incrementar en 1)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Tarjeta roja registrada
+  /api/matches/{id}/extratime:
+    patch:
+      summary: Registrar tiempo extra (incrementar en 1)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Tiempo extra incrementado
