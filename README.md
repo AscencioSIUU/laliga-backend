@@ -13,6 +13,7 @@ Este proyecto es el backend y frontend de **La Liga Tracker**, una aplicación p
 ---
 
 ## Estructura del Proyecto
+
 ```
 lab1and2/
 ├── Dockerfile
@@ -28,26 +29,28 @@ lab1and2/
 ```
 
 ---
+
 ## Descripción
+
 ### Archivos Principales
+
 - **Dockerfile:** Define el proceso de compilación del backend y la inclusión del frontend.
 - **docker-compose.yml:** Orquesta los servicios de MySQL (base de datos) y el backend.
 - **init.sql:** Script de inicialización que configura el usuario, plugin de autenticación y crea la tabla `matches`.
 - **main.go:** Código del backend (API REST) desarrollado con Gin.
 - **public/LaLigaTracker.html:** Archivo estático que representa el frontend de la aplicación.
+
 ### Rutas creadas
 
 ## Endpoints del Backend
 
-| Endpoint             | Método   | Descripción                                   | Ejemplo de Petición / Cuerpo                       |
-|----------------------|----------|-----------------------------------------------|----------------------------------------------------|
-| `/api/matches`       | **GET**  | Obtiene todos los partidos.                  | N/A                                                |
-| `/api/matches/:id`   | **GET**  | Obtiene un partido específico por su ID.     | `GET /api/matches/1`                               |
-| `/api/matches`       | **POST** | Crea un nuevo partido.                        | <pre>{"homeTeam": "Barcelona","awayTeam": "Real Madrid","matchDate":"2025-04-01"}</pre> |
-| `/api/matches/:id`   | **PUT**  | Actualiza un partido existente por su ID.     | <pre>{"homeTeam": "Atletico","awayTeam": "Sevilla","matchDate": "2025-05-10"}</pre> |
-| `/api/matches/:id`   | **DELETE** | Elimina un partido específico por su ID.   | `DELETE /api/matches/1`                            |
-
-
+| Endpoint           | Método     | Descripción                               | Ejemplo de Petición / Cuerpo                                                            |
+| ------------------ | ---------- | ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| `/api/matches`     | **GET**    | Obtiene todos los partidos.               | N/A                                                                                     |
+| `/api/matches/:id` | **GET**    | Obtiene un partido específico por su ID.  | `GET /api/matches/1`                                                                    |
+| `/api/matches`     | **POST**   | Crea un nuevo partido.                    | <pre>{"homeTeam": "Barcelona","awayTeam": "Real Madrid","matchDate":"2025-04-01"}</pre> |
+| `/api/matches/:id` | **PUT**    | Actualiza un partido existente por su ID. | <pre>{"homeTeam": "Atletico","awayTeam": "Sevilla","matchDate": "2025-05-10"}</pre>     |
+| `/api/matches/:id` | **DELETE** | Elimina un partido específico por su ID.  | `DELETE /api/matches/1`                                                                 |
 
 ---
 
@@ -79,4 +82,23 @@ DB_NAME=laliga
 ```bash
 docker-compose down -v
 docker-compose up --build -d
+```
+
+## Documentación de la API (Swagger)
+
+El archivo [`swagger.yaml`](./swagger.yaml) describe los endpoints y parámetros de la API siguiendo el estándar OpenAPI 3.0.0.
+
+### Visualizar con Swagger UI
+
+1. Ejecutar el contenedor oficial de Swagger UI:
+   ```bash
+   docker run --rm -p 8081:8080 \
+     -v $(pwd)/swagger.yaml:/usr/share/nginx/html/swagger.yaml \
+     swaggerapi/swagger-ui
+   ```
+
+### Abrir swagger en el navegador
+
+```
+http://localhost:8081
 ```
