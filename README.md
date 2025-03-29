@@ -86,7 +86,7 @@ docker-compose up --build -d
 
 ## Documentación de la API (Swagger)
 
-El archivo [`swagger.yaml`](./swagger.yaml) describe los endpoints y parámetros de la API siguiendo el estándar OpenAPI 3.0.0.
+El archivo [`swagger.yaml`](./docs/swagger.yaml) describe los endpoints y parámetros de la API siguiendo el estándar OpenAPI 3.0.0.
 
 ### Visualizar con Swagger UI
 
