@@ -220,8 +220,11 @@
           try {
             const response = await fetch(`${apiBaseUrl}/matches/${matchId}`);
             if (!response.ok) throw new Error("Partido no encontrado");
-            const match = await response.json();
-            displayMatchDetails(match);
+            const data = await response.json();
+            // data = { match: { ... } }
+
+            // Aquí extraes data.match antes de pasarlo a la función
+            displayMatchDetails(data.match);
           } catch (error) {
             alert(error);
           }
